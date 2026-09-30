@@ -11,7 +11,7 @@ app = FastAPI()
 
 @app.get("/health")
 def health():
-    return {"Status": "ok"}
+    return {"Status": "ok", "version": "2"}
 
 
 @app.post("/webhook")

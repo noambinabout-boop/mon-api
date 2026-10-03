@@ -5,6 +5,8 @@ import hashlib
 import subprocess
 import json
 
+from dataBaseManagment.notesDataBase import NotesDataBase
+
 
 app = FastAPI()
 
@@ -40,7 +42,14 @@ async def webHooks(request: Request):
     
     raise HTTPException(status_code=401, detail="Les signatures ne sont pas les mêmes")
 
-    
+
+if __name__ == "__main__":
+
+    note_db = NotesDataBase("notes.db")
+    note_db.insert_new_note("première note", "Ceci est ma première note, si ça marche c'est la folie", "03-10-2026")
+    print(note_db.get_notes_with_id(1))
+    note_db.close_connextion()
+
 
 
     

@@ -15,11 +15,13 @@ class DataBase(ABC):
         try:
             self.cursor.execute(sql, parameters)
             self.connexion.commit()
+            return True
             
         except sqlite3.Error as e:
             print("Erreur lors de l'insertion : ", e)
+            return False
 
-        return
+        
 
     def fetch_all(self, sql, parameters=()):
             try:

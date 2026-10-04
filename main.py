@@ -6,7 +6,7 @@ import subprocess
 import json
 
 from dataBaseManagment.notesDataBase import NotesDataBase
-from models import Note
+from models.Note import Note
 
 
 app = FastAPI()

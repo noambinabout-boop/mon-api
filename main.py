@@ -6,6 +6,7 @@ import subprocess
 import json
 
 from dataBaseManagment.notesDataBase import NotesDataBase
+from models import Note
 
 
 app = FastAPI()
@@ -43,12 +44,19 @@ async def webHooks(request: Request):
     raise HTTPException(status_code=401, detail="Les signatures ne sont pas les mêmes")
 
 
-@app.get("/db/notes/get/{id}")
+@app.get("/db/note/{id}")
 def get_notes_id(id: int):
-
     notes_db = NotesDataBase("notes.db")
     result = notes_db.get_notes_with_id()
     if result != []:
         return {"Note": result[0][1]}
     raise HTTPException(status_code="404", detail="Not found")
 
+
+@app.post("/db/note")
+def add_note(note: Note):
+    notes_db = NotesDataBase("notes.db")
+    result = notes_db.insert_new_note(note.Note.title, note.Note.note, note.Note.date)
+    if result:
+        return {"Message": "Tout s'est bien passé !"}
+    raise HTTPException(status_code=401, detail="Erreur lors de la création de la note")

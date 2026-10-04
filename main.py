@@ -41,4 +41,14 @@ async def webHooks(request: Request):
         return {"Message": "accepté, traitement en cours"}
     
     raise HTTPException(status_code=401, detail="Les signatures ne sont pas les mêmes")
-    
+
+
+@app.get("/db/notes/get/{id}")
+def get_notes_id(id: int):
+
+    notes_db = NotesDataBase("notes.db")
+    result = notes_db.get_notes_with_id()
+    if result != []:
+        return {"Note": result[0][1]}
+    raise HTTPException(status_code="404", detail="Not found")
+

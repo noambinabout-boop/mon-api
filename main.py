@@ -49,7 +49,7 @@ def get_notes_id(id: int):
     notes_db = NotesDataBase("notes.db")
     result = notes_db.get_notes_with_id(id)
     if result != []:
-        return {"Note": result[0][1]}
+        return {"Note": result[0][1:]}
     raise HTTPException(status_code="404", detail="Not found")
 
 

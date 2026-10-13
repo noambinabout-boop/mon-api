@@ -30,5 +30,9 @@ class NotesDataBase(DataBase):
     def get_notes_with_title(self, title: str):
         sql = "SELECT * FROM notes WHERE title = ?;"
         return self.fetch_all(sql, parameters=(title,))
+
+    def get_all_notes(self):
+        sql = "SELECT * FROM notes"
+        return self.fetch_all(sql)
         
     

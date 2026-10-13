@@ -16,6 +16,18 @@ class NotesDataBase(DataBase):
         sql = "DELETE FROM notes WHERE id = ?;"
         return self.execute_in_db(sql, parameters=(id,))
 
+    def update_note_with_id(self, id: int, update_field: str, new_field: str):
+        if update_field == "title":
+            sql = "UPDATE notes SET title = ? WHERE id = ?"
+            return self.execute_in_db(sql, parameters=(new_field, id))
+
+        elif update_field == "note":
+            sql = "UPDATE notes SET note = ? WHERE id = ?"
+            return self.execute_in_db(sql, parameters=(new_field, id))
+
+        else:
+            return False
+
     def create_table(self):
          sql = "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, title TEXT NOT NULL, note TEXT NOT NULL, date TEXT NOT NULL);"
          self.execute_in_db(sql)

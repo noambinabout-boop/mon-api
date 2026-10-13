@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from dataBaseManagment.notesDataBase import NotesDataBase
 from models.Note import Note
+from models.PutNoteModel import PutNoteModel
 
 
 router = APIRouter(prefix="/db/note")
@@ -38,5 +39,19 @@ def add_note(note: Note):
         return {"Message": "Tout s'est bien passé !"}
     raise HTTPException(status_code=500, detail="Erreur lors de la création de la note")
 
+@router.delete("/id/{id}")
+def delete_note_id(id: int):
+    notes_db = NotesDataBase("notes.db")
+    result = notes_db.delete_note_with_id(id)
+    if result:
+        return {"Message" : "La deletion s'est bien passé !"}
+    raise HTTPException(status_code=500, detail="Erreur lors de la création de la note")
 
+@router.put("/id/{id}")
+def update_note_with_id(id: int, putModel: PutNoteModel):
+    notes_db = NotesDataBase("notes.db")
+    result = notes_db.update_note_with_id(id, putModel.update_field, putModel.new_field)
+    if result:
+            return {"Message" : "L'update s'est bien passé !"}
+    raise HTTPException(status_code=500, detail="Erreur lors de l'update de la note")
 
